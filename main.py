@@ -460,14 +460,15 @@ def main():
 
 
 if __name__ == "__main__":
-    scheduler = BlockingScheduler(timezone=SCHED_TZ)
-    # 중복 실행 방지, 미스파이어 허용
-    scheduler.add_job(
-        main,
-        CronTrigger(minute=25, second=0),
-        max_instances=1,
-        coalesce=True,
-        misfire_grace_time=120,
-    )
-    logging.info("⏰ 스케줄러 시작 (매시 25분 00초)")
-    scheduler.start()
+    main()
+    # scheduler = BlockingScheduler(timezone=SCHED_TZ)
+    # # 중복 실행 방지, 미스파이어 허용
+    # scheduler.add_job(
+    #     main,
+    #     CronTrigger(minute=25, second=0),
+    #     max_instances=1,
+    #     coalesce=True,
+    #     misfire_grace_time=120,
+    # )
+    # logging.info("⏰ 스케줄러 시작 (매시 25분 00초)")
+    # scheduler.start()
