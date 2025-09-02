@@ -451,6 +451,7 @@ def upload_news_into_threads(news_info):
 def main():
     try:
         news_info = crawl_newspic_ai_contents()
+        print(f"크롤링된 뉴스 개수: {len(news_info)}")
         upload_news_into_threads(news_info)
     except Exception as e:
         logging.warning(f"[main] 1차 시도 실패 → 재시도: {e}")
