@@ -177,30 +177,32 @@ def upload_news_into_threads(news_info):
             time.sleep(1)
 
             # 제목 입력
-            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[2]/div/div/div[1]/div[2]/div[2]/div[1]/p")
+            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[3]/div/div/div[1]/div[2]/div[2]/div[1]/p")
             e.send_keys(title)
             time.sleep(1)
 
             # 댓글 클릭
-            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[2]/div/div/div[2]/div[2]/span")
+            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[3]/div/div/div[2]/div[2]/span")
             e.click()
             time.sleep(1)
 
             # 댓글에 주소 입력
-            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[1]/p")
+            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[3]/div[2]/div/div[1]/div[2]/div[2]/div[1]/p")
             e.send_keys(f"내용 이어서 보기: {url}")
             time.sleep(1)
 
             # 이미지 추가
             e = threads_browser.find(By.XPATH, '//input[@type="file"]')
-            e.send_keys(f'C:\\Users\\Kang\\Desktop\\project\\threads-newspic\\{image}')
+            image_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image)
+            e.send_keys(image_path)
             time.sleep(1)
 
             # 게시 버튼 클릭
-            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[3]/div/div[1]/div")
+            e = threads_browser.find(By.XPATH, "/html/body/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/div/div/div/div[2]/div/div/div/div/div/div[4]/div/div[1]/div")
             e.click()
             time.sleep(10)
-    except:
+    except Exception as e:
+        print(e)
         threads_browser.terminate()
         return False
 
@@ -209,13 +211,19 @@ def upload_news_into_threads(news_info):
 
 def main():
     try:
-        news_info = crawl_newspic_ai_contents()
+        # news_info = crawl_newspic_ai_contents()
+        news_info = {
+            "06090800_1_1": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
+            "06090800_1_2": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
+            "06090800_1_3": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
+        }
         upload_news_into_threads(news_info)
     except:
         news_info = crawl_newspic_ai_contents()
         upload_news_into_threads(news_info)
 
 if __name__ == "__main__":
-    scheduler = BlockingScheduler()
-    scheduler.add_job(main, CronTrigger(minute=25, second=0))
-    scheduler.start()
+    main()
+    # scheduler = BlockingScheduler()
+    # scheduler.add_job(main, CronTrigger(minute=25, second=0))
+    # scheduler.start()
