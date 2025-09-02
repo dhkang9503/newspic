@@ -449,23 +449,24 @@ def upload_news_into_threads(news_info):
     threads_browser.terminate()
     return True
 
+def remove_images():
+    # 현재 실행 중인 파이썬 파일의 디렉토리
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # 해당 디렉토리 안의 모든 .jpg 파일 찾기
+    jpg_files = glob.glob(os.path.join(current_dir, "*.jpg"))
+
+    # 파일 삭제
+    for file_path in jpg_files:
+        try:
+            os.remove(file_path)
+            print(f"삭제됨: {file_path}")
+        except Exception as e:
+            print(f"삭제 실패: {file_path}, 오류: {e}")
 
 def main():
+    remove_images()
     try:
-        # 현재 실행 중인 파이썬 파일의 디렉토리
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-
-        # 해당 디렉토리 안의 모든 .jpg 파일 찾기
-        jpg_files = glob.glob(os.path.join(current_dir, "*.jpg"))
-
-        # 파일 삭제
-        for file_path in jpg_files:
-            try:
-                os.remove(file_path)
-                print(f"삭제됨: {file_path}")
-            except Exception as e:
-                print(f"삭제 실패: {file_path}, 오류: {e}")
-
         news_info = crawl_newspic_ai_contents()
         print(f"크롤링된 뉴스 개수: {len(news_info)}")
         upload_news_into_threads(news_info)
