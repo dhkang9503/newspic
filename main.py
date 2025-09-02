@@ -354,6 +354,7 @@ def crawl_newspic_ai_contents():
             newspic_browser.close_other_tabs()
 
             news_info[unique_id] = (news_title, news_url, image_path)
+            print(f"크롤링된 뉴스: {unique_id} / {news_title}, {news_url}, {image_path}")
 
         # next 버튼
         next_btn = newspic_browser.find(By.XPATH, "/html/body/div[6]/main/div[1]/section[2]/div[2]/div/p/button[2]", clickable=True)
@@ -372,7 +373,7 @@ def upload_news_into_threads(news_info):
     try:
         threads_browser = Browser(THREADS_COOKIE_FILE, "https://threads.net/")
         threads_browser.open_browser()
-        time.sleep(3)  # 초기 렌더 안정화
+        time.sleep(10)  # 초기 렌더 안정화
 
         for key, (title, url, image) in news_info.items():
             # 게시버튼 클릭
@@ -464,7 +465,7 @@ def main():
                 print(f"삭제됨: {file_path}")
             except Exception as e:
                 print(f"삭제 실패: {file_path}, 오류: {e}")
-                
+
         news_info = crawl_newspic_ai_contents()
         print(f"크롤링된 뉴스 개수: {len(news_info)}")
         upload_news_into_threads(news_info)
