@@ -211,12 +211,7 @@ def upload_news_into_threads(news_info):
 
 def main():
     try:
-        # news_info = crawl_newspic_ai_contents()
-        news_info = {
-            "06090800_1_1": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
-            "06090800_1_2": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
-            "06090800_1_3": ("[단독] '이재명 변호사비 대납 의혹' 제기한 김용민, 1심서 무죄", "https://m.newspic.kr/view.html?no=2024060908000283", "09022330_6_2_temp.jpg"),
-        }
+        news_info = crawl_newspic_ai_contents()
         upload_news_into_threads(news_info)
     except:
         news_info = crawl_newspic_ai_contents()
